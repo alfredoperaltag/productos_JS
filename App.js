@@ -24,9 +24,19 @@ class UI {
     deleteProduct(element) {
         if (element.name === 'delete')
             element.parentElement.parentElement.parentElement.remove();
+        this.showMessage('producto eliminado', 'danger');
     }
-    showMessage() {
-
+    showMessage(message, cssClass) {
+        const div = document.createElement('div');
+        div.className = `alert alert-${cssClass} mt-4`;
+        div.appendChild(document.createTextNode(message));
+        //mostrando en el DOM
+        const container = document.querySelector('.container');
+        const app = document.querySelector('#App');
+        container.insertBefore(div, app);
+        setTimeout(function () {
+            document.querySelector('.alert').remove();
+        }, 3000);
     }
     resetForm() {
         document.getElementById('product-form').reset();
@@ -40,8 +50,13 @@ document.getElementById('product-form').addEventListener('submit', function (e) 
 
     const product = new Product(name, price, year);
     const ui = new UI();
+
+    if (name === '' || price === '' || year === '') {
+        return ui.showMessage('complete los campos', 'danger');
+    }
     ui.addProduct(product);
     ui.resetForm();
+    ui.showMessage('producto agregado correctamente', 'success');
 
     e.preventDefault();
 });
