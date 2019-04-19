@@ -42,7 +42,7 @@ class UI {
         document.getElementById('product-form').reset();
     }
 }
-// DOM Events
+// DOM Eventes
 document.getElementById('product-form').addEventListener('submit', function (e) {
     const name = document.getElementById('name').value;
     const price = document.getElementById('price').value;
