@@ -13,18 +13,23 @@ class UI {
         element.innerHTML = `
         <div class="card text-center mb-4">
             <div class="card-body">
-                <strong>Nombre del Producto</strong>: ${product.name}
-                <strong>Precio del Producto</strong>: ${product.price}
-                <strong>Año del Producto</strong>: ${product.year}
+                <h6>Nombre del Producto:</h6> ${product.name}
+                <h6>Precio del Producto:</h6> ${product.price}
+                <h6>Año del Producto:</h6> ${product.year}
+                <a href="#" class="btn btn-danger" name="delete">Delete</a>
             </div>
         </div>`;
         productList.appendChild(element);
     }
-    deleteProduct() {
-
+    deleteProduct(element) {
+        if (element.name === 'delete')
+            element.parentElement.parentElement.parentElement.remove();
     }
     showMessage() {
 
+    }
+    resetForm() {
+        document.getElementById('product-form').reset();
     }
 }
 // DOM Events
@@ -34,11 +39,14 @@ document.getElementById('product-form').addEventListener('submit', function (e) 
     const year = document.getElementById('year').value;
 
     const product = new Product(name, price, year);
-    console.log(product);
     const ui = new UI();
     ui.addProduct(product);
-
-
+    ui.resetForm();
 
     e.preventDefault();
+});
+
+document.getElementById('product-list').addEventListener('click', function (e) {
+    const ui = new UI();
+    ui.deleteProduct(e.target);
 });
